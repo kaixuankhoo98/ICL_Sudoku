@@ -10,6 +10,8 @@ using namespace std;
 /* You are pre-supplied with the functions below. Add your own 
    function definitions to the end of this file. */
 
+// This is an update to sudoku.cpp
+
 /* pre-supplied function to load a Sudoku board from a file */
 void load_board(const char* filename, char board[9][9]) {
 
