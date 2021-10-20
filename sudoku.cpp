@@ -10,8 +10,6 @@ using namespace std;
 /* You are pre-supplied with the functions below. Add your own 
    function definitions to the end of this file. */
 
-// This is an update to sudoku.cpp
-
 /* pre-supplied function to load a Sudoku board from a file */
 void load_board(const char* filename, char board[9][9]) {
 
@@ -74,3 +72,19 @@ void display_board(const char board[9][9]) {
 }
 
 /* add your functions here */
+
+/* Function to determine if board is full
+returns true if yes, false if no */
+bool is_complete(char board[9][9]) {
+  bool flag = true;
+  int row_count, col_count;
+  for (row_count = 0; row_count <= 8; row_count++) {
+    for (col_count = 0; col_count <= 8; col_count++); {
+      char digit;
+      if (digit = board[row_count][col_count] == '.') {
+        flag = false;
+      }
+    }
+  }
+  return flag;
+}
