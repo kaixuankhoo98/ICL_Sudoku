@@ -73,8 +73,8 @@ void display_board(const char board[9][9]) {
 
 /* add your functions here */
 
-/* Function to determine if board is full
-returns true if yes, false if no */
+/* Function to determine if board is full. Takes the board.
+Returns true if yes, false if no */
 bool is_complete(char board[9][9]) {
   bool flag = true;
   int row_count, col_count;
@@ -88,3 +88,124 @@ bool is_complete(char board[9][9]) {
   }
   return flag;
 }
+
+/* Gets the cell number (1-9) of which 3x3 cell we are in. Takes the row and column index. 
+  Returns the cell number from the following array:
+  0 1 2
+  3 4 5
+  6 7 8 */
+int get_cell(int rowIndex, int colIndex) {
+  int cell;
+  cell = ((rowIndex) / 3) * 3 + ((colIndex) / 3);
+  return cell;
+}
+
+/* Checks if move is legal. Takes indices, a digit, and the board.
+  Returns true if legal move, false otherwise. */
+bool is_legal(int rowIndex, int colIndex, char digit, char board[9][9]) {
+  bool legal = true;
+  for (int row = 0; row <= 8; row++) {
+    if (board[row][colIndex] == digit)
+      legal = false;
+  }
+  for (int col = 0; col <= 8; col++) {
+    if (board[rowIndex][col] == digit)
+      legal = false;
+  } // Checks if any matching digits in the same row or column
+
+  int cell = get_cell(rowIndex, colIndex);
+  for (int cellRows = 3*(cell / 3); cellRows <= 3*(cell / 3) + 2; cellRows++) {
+    for (int cellCols = 3*(cell % 3); cellCols <= 3*(cell % 3) + 2; cellCols++) {
+      if (board[cellRows][cellCols] == digit)
+        legal = false;
+    }
+  } // Checks if any matching digits in the same 3x3 cell
+  return legal;
+}
+
+/* Make move function. Takes coordinate, a digit, and the board.
+  Returns if the move is legal, and alters the board if legal. */
+bool make_move(char const position[3], char digit, char board[9][9]) {
+  int rowIndex, colIndex;
+  rowIndex = static_cast<int>(position[0]-'A');
+  colIndex = static_cast<int>(position[1]-'1');
+  
+  bool legal = true;
+  legal = is_legal(rowIndex, colIndex, digit, board);
+
+  if (legal == true)
+    board[rowIndex][colIndex] = digit; // Insert new number into board
+  return legal;
+}
+
+/* Save board function. Takes input for filename (max 80 chars) and the board.
+  Saves the board input to that file. */
+bool save_board(char const filename[80], char board[9][9]) {
+  ofstream output;
+  output.open(filename);
+  bool flag = true;
+
+  if (output.fail()) {
+        cerr << "Cannot open file" << filename << endl;
+        flag = false;
+  } 
+
+  for (int row = 0; row <= 8; row++) {
+    for (int col = 0; col <= 8; col++) {
+      output << board[row][col];
+    } output << endl;
+  } 
+  output.close();
+
+  return flag;
+} 
+
+/* Recursive function to solve board. Takes the board.
+  Returns true and updates board to solution if there is one.
+  Returns false and reflects the original board if no solution is found. */
+bool solve_board(char board[9][9]) {
+  int rowIndex = 0;
+  int colIndex = 0;
+  char nextPosition [3];
+  
+  next_empty(rowIndex, colIndex, board);
+  convert_to_string(nextPosition, rowIndex, colIndex);
+
+  // cout << "Next empty position is " << nextPosition << endl;
+
+  if (rowIndex == 9) 
+    return true;
+  
+  for (char tryInput = '1'; tryInput <= '9'; tryInput++) {
+    if (make_move(nextPosition, tryInput, board))
+      if(solve_board(board) == true) {
+        
+        return true;
+      }
+  }
+  board[rowIndex][colIndex] = '.'; // resets the previous number to an empty position
+  return false;
+}
+
+int get_next_row(int row, int col) {
+  return row + (col + 1) / 9;
+}
+int get_next_col(int col) {
+  return (col + 1) % 9;
+}
+
+void next_empty(int& rowIndex, int& colIndex, char board[9][9]) {
+  while (board[rowIndex][colIndex] >= '1' && board[rowIndex][colIndex] <= '9') {
+    // next_position(rowIndex, colIndex); 
+    rowIndex = get_next_row(rowIndex, colIndex);
+    colIndex = get_next_col(colIndex);
+  }
+}
+
+/* Converts the current row and column index into a string that can be used for make_move */
+void convert_to_string(char nextPosition[3], int rowIndex, int colIndex) {
+  nextPosition[0] = static_cast<char>(rowIndex + static_cast<int>('A'));
+  nextPosition[1] = static_cast<char>(colIndex + static_cast<int>('1'));
+  nextPosition[2] = '\0';
+}
+
