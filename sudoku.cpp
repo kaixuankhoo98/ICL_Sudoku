@@ -79,9 +79,9 @@ bool is_complete(char board[9][9]) {
   bool flag = true;
   int row_count, col_count;
   for (row_count = 0; row_count <= 8; row_count++) {
-    for (col_count = 0; col_count <= 8; col_count++); {
+    for (col_count = 0; col_count <= 8; col_count++) {
       char digit;
-      if (digit = board[row_count][col_count] == '.') {
+      if ((digit = board[row_count][col_count]) == '.') {
         flag = false;
       }
     }
@@ -181,12 +181,13 @@ bool solve_board(char board[9][9]) {
       if(solve_board(board) == true) {
         
         return true;
-      }
+      } // Recursive backtracking checks if next iteration of solve_board returns true
   }
-  board[rowIndex][colIndex] = '.'; // resets the previous number to an empty position
-  return false;
+  board[rowIndex][colIndex] = '.'; // Resets the previous number to an empty position
+  return false; // Otherwise returns if no legal move is present
 }
 
+/* Functions to get the next row and column */
 int get_next_row(int row, int col) {
   return row + (col + 1) / 9;
 }
@@ -194,6 +195,8 @@ int get_next_col(int col) {
   return (col + 1) % 9;
 }
 
+/* Uses the get_next_row and get_next_column functions to update
+ rowIndex and colIndex to the next empty position on the board */
 void next_empty(int& rowIndex, int& colIndex, char board[9][9]) {
   while (board[rowIndex][colIndex] >= '1' && board[rowIndex][colIndex] <= '9') {
     // next_position(rowIndex, colIndex); 
