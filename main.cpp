@@ -84,6 +84,66 @@ int main() {
   cout << "=================== Question 5 ===================\n\n";
 
   // write more tests
+  load_board("mystery1.dat", board);
+  if (solve_board(board)) {
+    cout << "The 'mystery1' board has a solution:\n";
+    display_board(board);
+  } else {
+    cout << "A solution cannot be found.\n";
+  }
+  cout << '\n';
+
+  load_board("mystery2.dat", board);
+  if (solve_board(board)) {
+    cout << "The 'mystery2' board has a solution:\n";
+    display_board(board);
+  } else {
+    cout << "A solution cannot be found.\n";
+  }
+  cout << '\n';
+
+  load_board("mystery3.dat", board);
+  if (solve_board(board)) {
+    cout << "The 'mystery3' board has a solution:\n";
+    display_board(board);
+  } else {
+    cout << "A solution cannot be found.\n";
+  }
+  cout << '\n';
+
+  // test to see how many recursions
+  load_board("mystery1.dat", board);
+  int mystery1_recursions = 0;
+  if (solve_board_tester(board, mystery1_recursions)) {
+    cout << "The 'mystery1' board has a solution:\n";
+    display_board(board);
+  } else {
+    cout << "A solution cannot be found.\n";
+  }
+  cout << '\n';
+  cout << "Total number of recursions attempted for mystery1.dat is " << mystery1_recursions << "\n\n";
+
+  load_board("mystery2.dat", board);
+  int mystery2_recursions = 0;
+  if (solve_board_tester(board, mystery2_recursions)) {
+    cout << "The 'mystery2' board has a solution:\n";
+    display_board(board);
+  } else {
+    cout << "A solution cannot be found.";
+  }
+  cout << '\n';
+  cout << "Total number of recursions attempted for mystery2.dat is " << mystery2_recursions << "\n\n";
+
+  load_board("mystery3.dat", board);
+  int mystery3_recursions = 0;
+  if (solve_board_tester(board, mystery3_recursions)) {
+    cout << "The 'mystery3' board has a solution:\n";
+    display_board(board);
+  } else {
+    cout << "A solution cannot be found.\n";
+  }
+  cout << '\n';
+  cout << "Total number of recursions attempted for mystery3.dat is " << mystery3_recursions << "\n\n";
 
   return 0;
 }

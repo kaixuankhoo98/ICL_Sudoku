@@ -212,3 +212,26 @@ void convert_to_string(char nextPosition[3], int rowIndex, int colIndex) {
   nextPosition[2] = '\0';
 }
 
+bool solve_board_tester(char board[9][9], int& recursion_counter) {
+  int rowIndex = 0;
+  int colIndex = 0;
+  char nextPosition [3];
+  
+  next_empty(rowIndex, colIndex, board);
+  convert_to_string(nextPosition, rowIndex, colIndex);
+
+  //cout << "Next empty position is " << nextPosition << endl;
+
+  if (rowIndex == 9) 
+    return true;
+  
+  for (char tryInput = '1'; tryInput <= '9'; tryInput++) {
+    if (make_move(nextPosition, tryInput, board))
+      if(solve_board_tester(board, recursion_counter) == true) {
+        
+        return true;
+      } // Recursive backtracking checks if next iteration of solve_board returns true
+  } recursion_counter += 1;
+  board[rowIndex][colIndex] = '.'; // Resets the previous number to an empty position
+  return false; // Otherwise returns if no legal move is present
+}

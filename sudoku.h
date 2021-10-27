@@ -16,3 +16,4 @@ bool solve_board(char board[9][9]);
 void next_position(int& rowIndex, int& colIndex);
 void next_empty(int& rowIndex, int& colIndex, char board[9][9]);
 void convert_to_string(char nextPosition[3], int rowIndex, int colIndex);
+bool solve_board_tester(char board[9][9], int& recursion_counter);

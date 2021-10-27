@@ -1,1 +1,25 @@
 Summarise your findings here (see specification).
+
+By testing mystery1.dat, mystery2.dat and mystery3.dat, we can determine that there is a 
+solution for 1 and 3, and no solution for 2. 
+
+The specification states among the 3 mystery files, there is a "hard", "extremely hard" and 
+"impossible" board. By ouputting the number of recursions, we can see how many attempts were 
+made by the recursive backtracking in order to find the solution. For this, we also use the 
+solve_board_tester function. These findings are summarized:
+    mystery1.dat has 421488 recursions (and is solvable)
+    mystery2.dat has 11533 recursions (and is NOT solvable)
+    mystery3.dat has 14076 recursions (and is solvable)
+
+Therefore, we can assign these as:
+    mystery1.dat is "extremely hard"
+    mystery2.dat has "impossible"
+    mystery3.dat has "hard"
+
+============================================================================================
+
+By using a solve_board_tester function, which outputs the position we are testing each time 
+as well as the total number of recursions attempted, we can determine exactly where each of 
+the recursions in mystery2.dat is stopping and what we are checking. (To test this, just 
+uncomment the //cout statement on line 223 of sudoku.cpp). We conclude that after 11533 
+recursions, there is no solution found for this puzzle. 
