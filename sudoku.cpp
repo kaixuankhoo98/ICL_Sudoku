@@ -77,14 +77,11 @@ void display_board(const char board[9][9]) {
 Returns true if yes, false if no */
 bool is_complete(char board[9][9]) {
   bool flag = true;
-  if (board[9][9] == '0') {
-    flag = false;
-  }
   int row_count, col_count;
   for (row_count = 0; row_count <= 8; row_count++) {
     for (col_count = 0; col_count <= 8; col_count++) {
       char digit;
-      if ((digit = board[row_count][col_count]) == '.') {
+      if ((digit = board[row_count][col_count]) == '.' || (digit = board[row_count][col_count]) == '0' ) {
         flag = false;
       }
     }
